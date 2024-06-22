@@ -1,0 +1,72 @@
+To access objects in the S3 bucket, we can use this policy.
+
+{
+	"Version": "2012-10-17",
+	"Id": "Policy1718280519366",
+	"Statement": [
+		{
+			"Sid": "Stmt1718280422649",
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": "s3:GetObject",
+			"Resource": "arn:aws:s3:::testdemoroy/index.html"
+		}
+	]
+}
+
+
+Effect: The effect of the policy, which is "Allow" in this case. This means the actions specified in the policy are allowed.
+
+Principal: Specifies who the policy applies to. In this case, it is "*", meaning it applies to everyone (all users).
+
+Action: The specific action that is allowed. Here, it is "s3", which means the policy allows the action of getting an object from the S3 bucket.
+
+Resource: Specifies the resource that the policy applies to. In this policy, it is "arn:aws:s3:::testdemoroy/index.html". This is the Amazon Resource Name (ARN) for a specific object in the S3 bucket named "testdemoroy", specifically the object "index.html".
+
+================================================================
+
+This policy is used to grant broad access to an S3 bucket while specifically denying access to one user, "Royson Pais". 
+
+{
+  "Id": "Policy1718343867428",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1718343864965",
+      "Action": [
+        "s3:DeleteObject",
+        "s3:GetObject",
+        "s3:ListBucket",
+        "s3:PutObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::testdemoroy",
+      "Condition": {
+        "ArnNotEquals": {
+          "aws:username": "Royson Pais"
+        }
+      },
+      "Principal": "*"
+    }
+  ]
+}
+
+
+Action: A list of actions that are allowed by this policy. The actions included are:
+s3:DeleteObject: Allows deletion of objects in the bucket.
+s3:GetObject: Allows retrieval of objects from the bucket.
+s3:ListBucket: Allows listing the objects in the bucket.
+s3:PutObject: Allows uploading objects to the bucket.
+
+Effect: The effect of the policy, which is "Allow". This means the specified actions are permitted.
+
+Resource: Specifies the resource to which the policy applies, in this case, "arn:aws:s3:::testdemoroy". This refers to the entire testdemoroy bucket.
+
+Condition: Specifies conditions under which the policy applies. Here, the condition is:
+
+ArnNotEquals: This condition key means the policy applies only if the aws:username is not equal to "Royson Pais". In other words, the actions are allowed for everyone except the user with the username "Royson Pais".
+
+Principal: Specifies who the policy applies to. In this case, it is "*", meaning it applies to all users.
+
+
+=======================================================================
